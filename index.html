@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>チーム多様性の科学と実践</title>
+    <title>チーム多様性の科学と実践：包括的レポート</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -18,6 +18,9 @@
                         stone: {
                             50: '#fafaf9',
                             100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            700: '#44403c',
                             800: '#292524',
                             900: '#1c1917',
                         },
@@ -48,19 +51,24 @@
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
-            height: 300px;
+            height: 350px;
         }
-        @media (min-width: 768px) {
-            .chart-container {
-                height: 350px;
-            }
+        .text-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1rem;
         }
-        .interactive-card {
-            transition: all 0.3s ease;
+        .citation-ref {
+            font-size: 0.75em;
+            vertical-align: super;
+            color: #0f766e;
+            font-weight: bold;
+            cursor: pointer;
         }
-        .interactive-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        .section-header {
+            border-left: 4px solid #0f766e;
+            padding-left: 1rem;
+            margin-bottom: 1.5rem;
         }
         .cem-path {
             transition: all 0.5s ease;
@@ -74,160 +82,197 @@
             border-style: solid;
         }
     </style>
-    <!-- Chosen Palette: Warm Neutral (Stone) with Teal (Success) and Rose (Alert) accents for an academic yet modern feel. -->
+    <!-- Chosen Palette: Warm Neutral (Stone) with Teal (Success) and Rose (Alert) accents. -->
     <!-- Application Structure Plan: 
-         1. Hero: Hook the user with the contrast between "Myth" and "Reality".
-         2. Data Analysis Section: Visualize the failure mechanisms (Conflict & Personality) using charts to show negative correlations found in research.
-         3. Theoretical Model Section (CEM): An interactive flow diagram where users toggle 'Beliefs' to see how it alters the outcome (Categorization vs. Elaboration). This explains the 'Why'.
-         4. Case Study Section (Belfre): Show concrete evidence of the solution working (GI-T scores).
-         5. Actionable Conclusion: A grid of 4 key takeaways.
-         This structure moves from Problem -> Theory -> Proof -> Action. -->
+         Structure is designed to be a comprehensive scrollable report ("Scrollytelling").
+         1. Intro: The Paradox of Diversity (Myth vs Reality).
+         2. Deep Dive: Why it fails? (Faultlines, Conflict, Personality). Detailed text based on PDFs.
+         3. Theory: CEM Model, Diversity Beliefs, Interdependence, Psych Safety.
+         4. Case Study: Belfre Training (Specifics from PDF).
+         5. Synthesis: Concrete Action Plan.
+         6. References: Full academic list.
+    -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
 </head>
-<body class="antialiased leading-relaxed">
+<body class="antialiased leading-relaxed text-stone-800">
 
     <!-- Navigation -->
-    <nav class="sticky top-0 z-50 bg-stone-100/90 backdrop-blur shadow-sm border-b border-stone-200">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <h1 class="text-lg font-bold text-science-dark tracking-tight">チーム多様性レポート</h1>
+    <nav class="sticky top-0 z-50 bg-stone-100/95 backdrop-blur shadow-sm border-b border-stone-200">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-lg font-bold text-science-dark tracking-tight">チーム多様性の科学的エビデンス</h1>
             <div class="hidden md:flex space-x-6 text-sm font-medium text-stone-600">
-                <a href="#reality" class="hover:text-science transition">現実と神話</a>
-                <a href="#mechanisms" class="hover:text-science transition">失敗のメカニズム</a>
-                <a href="#solution" class="hover:text-science transition">解決策(CEM)</a>
-                <a href="#case-study" class="hover:text-science transition">実践事例</a>
-                <a href="#action" class="hover:text-science transition">アクション</a>
-            </div>
-            <button id="mobile-menu-btn" class="md:hidden text-stone-600 focus:outline-none">
-                <span class="text-2xl">≡</span>
-            </button>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-stone-100 border-t border-stone-200 p-4">
-            <div class="flex flex-col space-y-3">
-                <a href="#reality" class="block text-stone-600 hover:text-science">現実と神話</a>
-                <a href="#mechanisms" class="block text-stone-600 hover:text-science">失敗のメカニズム</a>
-                <a href="#solution" class="block text-stone-600 hover:text-science">解決策(CEM)</a>
-                <a href="#case-study" class="block text-stone-600 hover:text-science">実践事例</a>
-                <a href="#action" class="block text-stone-600 hover:text-science">アクション</a>
+                <a href="#intro" class="hover:text-science transition">1. 現実と課題</a>
+                <a href="#failure" class="hover:text-science transition">2. 失敗の要因</a>
+                <a href="#theory" class="hover:text-science transition">3. 成功の理論(CEM)</a>
+                <a href="#case" class="hover:text-science transition">4. 実践事例</a>
+                <a href="#action" class="hover:text-science transition">5. 結論とアクション</a>
             </div>
         </div>
     </nav>
 
     <!-- Hero Section -->
-    <header class="bg-stone-50 py-16 md:py-24 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-teal-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 -translate-y-1/2 translate-x-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-64 h-64 bg-rose-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 translate-y-1/2 -translate-x-1/2"></div>
-        
+    <header id="intro" class="bg-stone-50 py-20 md:py-32 relative overflow-hidden border-b border-stone-200">
         <div class="container mx-auto px-4 text-center relative z-10">
-            <span class="inline-block py-1 px-3 rounded-full bg-stone-200 text-stone-600 text-xs font-bold tracking-wider mb-4">EVIDENCE-BASED MANAGEMENT</span>
-            <h1 class="text-3xl md:text-5xl font-bold text-stone-900 mb-5 leading-relaxed" style="line-height: 1.5;">
-                「多様性」は魔法の杖ではない。<br>
-                <span class="text-science-dark">科学的な設計</span>がチームを救う。
+            <span class="inline-block py-1 px-4 rounded-full bg-stone-200 text-stone-600 text-xs font-bold tracking-wider mb-6">Evidence-Based Management Report</span>
+            <h1 class="text-3xl md:text-5xl font-bold text-stone-900 mb-6 leading-tight">
+                「多様性は魔法」ではない。<br>
+                科学的設計なきチームは<span class="text-alert-dark">分断</span>する。
             </h1>
-            <p class="text-lg md:text-xl text-stone-600 max-w-2xl mx-auto mb-8">
-                「多様性は成果を生み出す」という神話を捨て、データが示す現実と、<br class="hidden md:inline">成果を出すための唯一の条件「情報の精緻化」を学びましょう。
+            <p class="text-lg md:text-xl text-stone-600 max-w-3xl mx-auto mb-10 leading-relaxed">
+                「色々な人を集めれば、自然と良いアイデアが出る」——この常識は、科学的には否定されています。<br>
+                数万件のデータを統合したメタ分析が示す「効果ゼロ」の現実と、<br>
+                そこから成果を引き出すための唯一のルート「情報の精緻化」について解説します。
             </p>
-            <a href="#reality" class="inline-block bg-science-dark text-white font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-science transition transform hover:-translate-y-1">
-                データを見る
-            </a>
         </div>
     </header>
 
-    <!-- Section 1: Reality Check -->
-    <section id="reality" class="py-16 bg-white border-b border-stone-100">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2">1. 神話 vs データ</h2>
-                <p class="text-stone-600 max-w-3xl mx-auto">
-                    過去数十年、多くの企業が「多様性＝パフォーマンス向上」と信じてきました。<br>
-                    しかし、Webber & Donahue (2001) や Bell (2007) による大規模なメタ分析（研究の統合）は、冷徹な事実を示しています。
-                </p>
+    <!-- Section 1: The Null Reality -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="section-header">
+                <h2 class="text-3xl font-bold text-stone-900">1. 多様性研究の歴史と「不都合な真実」</h2>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 mb-12">
+                <div class="text-content">
+                    <p>
+                        現代のビジネスにおいて、「ダイバーシティ（多様性）」はイノベーションの源泉であると信じられています。しかし、過去数十年にわたる研究の集大成である「メタ分析（多数の研究結果を統計的に統合する手法）」は、私たちの期待とは異なる冷徹な事実を突きつけています。
+                    </p>
+                    <p>
+                        <strong>結論から言えば、多様性とチームの成績（パフォーマンス）の間には、統計的に信頼できる関係性がほとんどありません。</strong>
+                    </p>
+                    <p>
+                        WebberとDonahue (2001) の研究<span class="citation-ref">[1]</span>や、Bell (2007) の記念碑的な分析<span class="citation-ref">[2]</span>によれば、性別や年齢といった「表面的な多様性」だけでなく、スキルや職歴といった「タスクに関連する多様性」であっても、単にそれがあるだけではパフォーマンス向上にはつながらないことが証明されました。さらに、性格や価値観といった「深層レベルの多様性」に至っては、実験室環境においてさえ効果は「無視できる程度」でした。
+                    </p>
+                </div>
+                <div class="bg-stone-50 p-6 rounded-xl border border-stone-200 shadow-sm">
+                    <h3 class="text-lg font-bold text-stone-700 mb-4 text-center">期待と現実のギャップ（メタ分析結果の概念図）</h3>
+                    <div class="chart-container" style="height: 300px;">
+                        <canvas id="metaChart"></canvas>
+                    </div>
+                    <p class="text-xs text-center text-stone-500 mt-4">
+                        Webber & Donahue (2001) および Bell (2007) の知見に基づく。<br>
+                        多くの組織が期待する「右肩上がり」のグラフは、現実のデータでは「ほぼ横ばい」または「条件によってはマイナス」となります。
+                    </p>
+                </div>
             </div>
 
-            <div class="grid md:grid-cols-2 gap-12 items-center">
-                <div class="bg-stone-50 p-6 rounded-xl border border-stone-100">
-                    <h3 class="text-lg font-bold text-stone-700 mb-4 text-center">期待と現実のギャップ</h3>
-                    <!-- Chart Container -->
-                    <div class="chart-container">
-                        <canvas id="mythChart"></canvas>
+            <div class="bg-stone-100 p-8 rounded-lg border-l-4 border-stone-400">
+                <h3 class="text-xl font-bold text-stone-800 mb-4">なぜ「混ぜるだけ」では失敗するのか？</h3>
+                <p class="mb-4">
+                    HarrisonとKlein (2007) は、私たちが一言で「多様性」と呼んでいるものが、実は全く異なる3つの種類のごちゃ混ぜであることを指摘しました<span class="citation-ref">[3]</span>。
+                </p>
+                <div class="grid md:grid-cols-3 gap-6 text-sm">
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <strong class="text-science-dark block text-lg mb-2">① バラエティ (Variety)</strong>
+                        <p>知識や経験の違い。「エンジニアと営業」のように異なる知見がある状態。<strong>これだけがイノベーションの源泉になります。</strong></p>
                     </div>
-                    <p class="text-xs text-center text-stone-400 mt-4">イメージ図: メタ分析結果（Webber & Donahue, 2001; Bell, 2007）に基づく概念的比較</p>
-                </div>
-                <div>
-                    <div class="space-y-6">
-                        <div class="p-4 border-l-4 border-alert bg-alert-light/10">
-                            <h4 class="font-bold text-alert-dark mb-1">関係性ゼロの衝撃</h4>
-                            <p class="text-sm text-stone-700">
-                                職務に関連する多様性であっても、統計的にはパフォーマンスに対して<strong>「信頼できる効果を持たない (No dependable effects)」</strong>ことが判明しました。
-                            </p>
-                        </div>
-                        <div class="p-4 border-l-4 border-stone-400 bg-stone-100">
-                            <h4 class="font-bold text-stone-700 mb-1">深層レベルの多様性も効果なし？</h4>
-                            <p class="text-sm text-stone-700">
-                                性格や価値観といった内面的な多様性でさえ、実験室環境ではパフォーマンスとの関係は<strong>「無視できる程度」</strong>でした。ただ混ぜるだけでは意味がないのです。
-                            </p>
-                        </div>
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <strong class="text-alert-dark block text-lg mb-2">② 分離 (Separation)</strong>
+                        <p>意見や価値観の対立。「賛成派と反対派」のように両極端に分かれる状態。これはチームの結束を破壊し、対立を生みます。</p>
+                    </div>
+                    <div class="bg-white p-4 rounded shadow-sm">
+                        <strong class="text-stone-700 block text-lg mb-2">③ 格差 (Disparity)</strong>
+                        <p>地位や権力の偏り。「一人の王様と多数の部下」の状態。下の立場の人が発言しなくなり、多様な意見が死にます。</p>
                     </div>
                 </div>
+                <p class="mt-4 text-stone-600">
+                    多くのチームは「バラエティ」を求めて多様な人を採用しますが、同時に「分離」や「格差」も持ち込んでしまい、プラスとマイナスが打ち消し合ってしまっているのです。
+                </p>
             </div>
         </div>
     </section>
 
     <!-- Section 2: Mechanisms of Failure -->
-    <section id="mechanisms" class="py-16 bg-stone-50">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl font-bold text-stone-800 mb-2">2. なぜ失敗するのか？</h2>
-                <p class="text-stone-600 max-w-3xl mx-auto">
-                    多様性がチームを崩壊させる主な原因は、「不毛な葛藤」と「性格の不一致」です。
+    <section id="failure" class="py-20 bg-stone-50 border-t border-stone-200">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="section-header border-alert">
+                <h2 class="text-3xl font-bold text-stone-900">2. チームを壊す「断層」と「性格の罠」</h2>
+            </div>
+
+            <div class="text-content mb-10">
+                <p>
+                    多様性がマイナスに働くとき、チーム内では何が起きているのでしょうか。研究が明らかにした主な要因は、<strong>「不毛な葛藤」</strong>と<strong>「性格のミスマッチ」</strong>です。
                 </p>
             </div>
 
-            <div class="grid lg:grid-cols-2 gap-8">
-                <!-- Card 1: Conflict -->
+            <!-- Conflict & Faultlines -->
+            <div class="grid md:grid-cols-2 gap-8 mb-16">
                 <div class="bg-white p-6 rounded-xl shadow-sm">
-                    <h3 class="text-lg font-bold text-stone-800 mb-2">幻想：「議論は良いことだ」</h3>
-                    <p class="text-sm text-stone-600 mb-4">
-                        「仕事上の対立（タスク葛藤）なら良い」と思われていましたが、De Dreu & Weingart (2003) はそれが誤りであることを証明しました。
+                    <h3 class="text-xl font-bold text-stone-800 mb-3">幻想：「議論（タスク葛藤）は良いことだ」</h3>
+                    <p class="text-stone-600 text-sm mb-4">
+                        かつては「人間関係の喧嘩（関係葛藤）はダメだが、仕事の進め方の議論（タスク葛藤）は良い」と言われていました。しかし、De DreuとWeingart (2003) の研究<span class="citation-ref">[4]</span>はこれを覆しました。
                     </p>
-                    <div class="chart-container h-64">
+                    <ul class="list-disc list-inside text-sm text-stone-600 space-y-2 mb-4">
+                        <li>タスク葛藤であっても、パフォーマンスとは<strong>「強いマイナスの関係」</strong>がある。</li>
+                        <li>特に複雑な仕事ほど、議論はメンバーの脳のスタミナ（認知資源）を奪う。</li>
+                        <li>仕事の議論は、容易に「人格攻撃」へとすり替わる（スピルオーバー効果）。</li>
+                    </ul>
+                    <div class="chart-container" style="height: 200px;">
                         <canvas id="conflictChart"></canvas>
                     </div>
-                    <p class="text-xs text-stone-500 mt-2">
-                        タスク葛藤が増えると、関係葛藤（人格攻撃）に転化しやすく、結果としてパフォーマンスは低下します（負の相関）。
-                    </p>
                 </div>
 
-                <!-- Card 2: Personality Interaction -->
-                <div class="bg-white p-6 rounded-xl shadow-sm flex flex-col">
-                    <h3 class="text-lg font-bold text-stone-800 mb-2">警告：「混ぜてはいけない性格」</h3>
-                    <p class="text-sm text-stone-600 mb-6">
-                        研究により、特定の性格特性において「バラつき（分散）」が大きいとチームに害を及ぼすことが分かっています。
+                <div class="bg-white p-6 rounded-xl shadow-sm">
+                    <h3 class="text-xl font-bold text-stone-800 mb-3">脅威：「断層（フォールトライン）」の発生</h3>
+                    <p class="text-stone-600 text-sm mb-4">
+                        LauとMurnighan (1998) が提唱した「断層」は、チームを真っ二つに割る見えない線のことです<span class="citation-ref">[5]</span>。
                     </p>
+                    <div class="bg-stone-100 p-4 rounded mb-4">
+                        <p class="text-sm font-bold text-stone-700">危険なチーム構成の例：</p>
+                        <p class="text-sm text-stone-600 mt-1">
+                            Aグループ：全員が「若手・女性・マーケティング担当」<br>
+                            Bグループ：全員が「ベテラン・男性・エンジニア」
+                        </p>
+                    </div>
+                    <p class="text-stone-600 text-sm">
+                        このように属性が重なって整列してしまうと、強い「私たち」対「あの人たち」という意識（内集団・外集団バイアス）が生まれ、協力どころか敵対関係になります。これを放置すると、情報は共有されず、チームは崩壊します。
+                    </p>
+                </div>
+            </div>
 
-                    <!-- Interactive Personality Mixer -->
-                    <div class="flex-grow bg-stone-100 rounded-lg p-6 border border-stone-200">
-                        <h4 class="font-bold text-stone-700 mb-4 text-center">チーム性格シミュレーター</h4>
-                        
-                        <div class="mb-6">
-                            <label class="block text-xs font-bold text-stone-500 mb-2 uppercase">誠実性 (真面目さ) の構成</label>
-                            <div class="flex gap-2">
-                                <button onclick="setPersonality('conscientious', 'high')" class="p-btn-c flex-1 py-2 text-sm border rounded bg-white hover:bg-stone-50 transition" id="btn-c-high">全員高い</button>
-                                <button onclick="setPersonality('conscientious', 'mixed')" class="p-btn-c flex-1 py-2 text-sm border rounded bg-white hover:bg-stone-50 transition" id="btn-c-mixed">バラバラ</button>
-                            </div>
-                        </div>
+            <!-- Personality Simulator (Enhanced) -->
+            <div class="bg-white p-8 rounded-xl shadow-lg border border-stone-200">
+                <h3 class="text-2xl font-bold text-stone-800 mb-6">絶対に混ぜてはいけない「性格の組み合わせ」</h3>
+                <p class="text-content mb-6">
+                    「性格もバラバラが良い」というのは誤りです。メタ分析（Peeters et al., 2006; Bell, 2007）によると、特定の性格については<strong>「全員が高いレベルで揃っている（同質である）」</strong>必要があります。
+                </p>
 
-                        <div class="mb-6">
-                            <label class="block text-xs font-bold text-stone-500 mb-2 uppercase">協調性 (優しさ) の構成</label>
-                            <div class="flex gap-2">
-                                <button onclick="setPersonality('agreeable', 'high')" class="p-btn-a flex-1 py-2 text-sm border rounded bg-white hover:bg-stone-50 transition" id="btn-a-high">全員高い</button>
-                                <button onclick="setPersonality('agreeable', 'mixed')" class="p-btn-a flex-1 py-2 text-sm border rounded bg-white hover:bg-stone-50 transition" id="btn-a-mixed">低い人が混在</button>
-                            </div>
+                <div class="grid md:grid-cols-2 gap-10">
+                    <div>
+                        <h4 class="font-bold text-stone-700 mb-4">① 誠実性（真面目さ・勤勉さ）</h4>
+                        <p class="text-sm text-stone-600 mb-4">
+                            コツコツ努力できるかどうか。ここにバラつき（分散）があると致命的です。
+                        </p>
+                        <div class="space-y-3">
+                            <button onclick="updatePersonalityExplain('conscientious', 'high')" class="w-full p-3 text-left border rounded hover:bg-stone-50 focus:ring-2 ring-science transition group">
+                                <span class="font-bold text-science-dark">全員が高い</span>
+                                <span class="block text-xs text-stone-500">みんなで頑張るチーム</span>
+                            </button>
+                            <button onclick="updatePersonalityExplain('conscientious', 'mixed')" class="w-full p-3 text-left border rounded hover:bg-alert-light focus:ring-2 ring-alert transition group">
+                                <span class="font-bold text-alert-dark">バラバラ（高い人と低い人が混在）</span>
+                                <span class="block text-xs text-stone-500">真面目な人とルーズな人</span>
+                            </button>
                         </div>
+                        <div id="explain-conscientious" class="mt-4 text-sm bg-stone-100 p-4 rounded hidden"></div>
+                    </div>
 
-                        <div id="simulation-result" class="p-4 bg-stone-200 rounded text-sm text-stone-700 font-medium text-center">
-                            ボタンを選択してシミュレーションを開始してください。
+                    <div>
+                        <h4 class="font-bold text-stone-700 mb-4">② 協調性（優しさ・配慮）</h4>
+                        <p class="text-sm text-stone-600 mb-4">
+                            他者を信頼し協力できるか。「最低スコア」のメンバーの存在が鍵です。
+                        </p>
+                        <div class="space-y-3">
+                            <button onclick="updatePersonalityExplain('agreeable', 'high')" class="w-full p-3 text-left border rounded hover:bg-stone-50 focus:ring-2 ring-science transition group">
+                                <span class="font-bold text-science-dark">全員が高い</span>
+                                <span class="block text-xs text-stone-500">心理的安全性が保たれる</span>
+                            </button>
+                            <button onclick="updatePersonalityExplain('agreeable', 'low')" class="w-full p-3 text-left border rounded hover:bg-alert-light focus:ring-2 ring-alert transition group">
+                                <span class="font-bold text-alert-dark">一人だけ極端に低い人がいる</span>
+                                <span class="block text-xs text-stone-500">腐ったリンゴの存在</span>
+                            </button>
                         </div>
+                        <div id="explain-agreeable" class="mt-4 text-sm bg-stone-100 p-4 rounded hidden"></div>
                     </div>
                 </div>
             </div>
@@ -235,130 +280,170 @@
     </section>
 
     <!-- Section 3: The Solution (CEM Model) -->
-    <section id="solution" class="py-16 bg-white border-y border-stone-200">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-10">
-                <span class="text-science font-bold text-sm tracking-wider">THEORY</span>
-                <h2 class="text-3xl font-bold text-stone-800 mt-2 mb-4">カテゴリー化 - エラボレーション・モデル (CEM)</h2>
-                <p class="text-stone-600 max-w-2xl mx-auto">
-                    Van Knippenbergら (2004) が提唱した、多様性を成功させるための理論モデルです。<br>
-                    鍵は<strong>「情報の精緻化 (Information Elaboration)」</strong>にあります。
+    <section id="theory" class="py-20 bg-white border-t border-stone-200">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="section-header">
+                <h2 class="text-3xl font-bold text-stone-900">3. 成功への理論：CEMモデル</h2>
+            </div>
+            
+            <div class="text-content">
+                <p>
+                    では、どうすれば多様性を成果に変えられるのでしょうか？
+                    Van Knippenbergら (2004) が提唱した<strong>「カテゴリー化-エラボレーション・モデル (CEM)」</strong>が、現在の最も信頼できる答えです<span class="citation-ref">[6]</span>。
+                </p>
+                <p>
+                    このモデルは、多様性が成果につながる道は<strong>「情報の精緻化（Elaboration）」</strong>ただ一つであると断言します。「情報の精緻化」とは、異なる意見を深く考え、統合し、新しい答えを作り出すプロセスのことです。
                 </p>
             </div>
 
-            <!-- Interactive CEM Model Visualization -->
-            <div class="max-w-4xl mx-auto bg-stone-50 p-6 md:p-10 rounded-2xl shadow-inner border border-stone-100">
+            <!-- Interactive CEM Model -->
+            <div class="mt-10 bg-stone-50 p-6 md:p-10 rounded-2xl border border-stone-200 shadow-inner">
+                <h3 class="text-xl font-bold text-center mb-8">運命を分ける「信念」のスイッチ</h3>
                 
-                <!-- Toggle Switch -->
-                <div class="flex justify-center mb-12">
-                    <div class="flex items-center space-x-4 bg-white p-2 rounded-full shadow-sm border border-stone-200">
-                        <span class="text-sm font-bold text-stone-500 pl-2">信念スイッチ:</span>
-                        <button onclick="toggleBelief(false)" id="btn-belief-bad" class="px-4 py-2 rounded-full text-sm font-bold transition bg-stone-200 text-stone-600">
-                            多様性は面倒だ
+                <div class="flex justify-center mb-10">
+                    <div class="bg-white p-2 rounded-full shadow-sm border border-stone-200 flex items-center gap-4">
+                        <span class="text-sm font-bold text-stone-500 pl-2">チームの信念:</span>
+                        <button onclick="toggleBelief(false)" id="btn-belief-bad" class="px-5 py-2 rounded-full text-sm font-bold transition bg-stone-200 text-stone-600">
+                            多様性は面倒だ (Pro-Similarity)
                         </button>
-                        <button onclick="toggleBelief(true)" id="btn-belief-good" class="px-4 py-2 rounded-full text-sm font-bold transition text-stone-400 hover:text-stone-600">
-                            多様性は価値だ
+                        <button onclick="toggleBelief(true)" id="btn-belief-good" class="px-5 py-2 rounded-full text-sm font-bold transition text-stone-400 hover:text-stone-600">
+                            多様性は価値だ (Pro-Diversity)
                         </button>
                     </div>
                 </div>
 
-                <!-- The Model Flow -->
-                <div class="relative grid md:grid-cols-3 gap-8 text-center items-center">
-                    
-                    <!-- Input -->
-                    <div class="relative z-10">
-                        <div class="bg-stone-800 text-white p-4 rounded-lg shadow-lg">
-                            <div class="text-2xl mb-2">👥</div>
-                            <h4 class="font-bold">多様なチーム</h4>
-                            <p class="text-xs text-stone-400 mt-1">スキル・背景の異質性</p>
-                        </div>
+                <div class="grid md:grid-cols-3 gap-6 text-center items-center relative">
+                    <!-- Step 1 -->
+                    <div class="bg-white p-4 rounded-lg shadow border border-stone-200 z-10">
+                        <div class="text-3xl mb-2">👥</div>
+                        <h4 class="font-bold">多様なチーム</h4>
+                        <p class="text-xs text-stone-500">情報・背景の違い</p>
                     </div>
 
-                    <!-- Process (Splits into two paths) -->
-                    <div class="relative h-64 md:h-auto flex flex-col justify-center gap-8 z-10">
-                        
-                        <!-- Path A: Categorization -->
-                        <div id="path-cat" class="cem-path bg-white p-4 rounded-lg border-alert text-stone-400 transition-all duration-500 transform scale-95 opacity-50">
+                    <!-- Step 2: Processes -->
+                    <div class="space-y-6 z-10">
+                        <!-- Path Bad -->
+                        <div id="path-cat" class="cem-path bg-white p-4 rounded-lg border-alert text-stone-400 opacity-50">
                             <h4 class="font-bold text-alert mb-1">社会カテゴリー化</h4>
-                            <p class="text-xs">「あいつらは敵だ」</p>
-                            <div class="my-2 text-xs bg-stone-100 p-1 rounded">分断・内集団バイアス</div>
-                            <p class="text-xs font-bold mt-2">断層 (Faultlines)</p>
+                            <p class="text-xs">「私たち」vs「あの人たち」</p>
+                            <div class="mt-2 text-xs bg-stone-100 p-1 rounded">分断・バイアス・無視</div>
                         </div>
-
-                        <!-- Path B: Elaboration -->
-                        <div id="path-elab" class="cem-path bg-white p-4 rounded-lg border-science text-stone-400 transition-all duration-500 transform scale-95 opacity-50">
+                        <!-- Path Good -->
+                        <div id="path-elab" class="cem-path bg-white p-4 rounded-lg border-science text-stone-400 opacity-50">
                             <h4 class="font-bold text-science mb-1">情報の精緻化</h4>
-                            <p class="text-xs">「違う意見を混ぜよう」</p>
-                            <div class="my-2 text-xs bg-stone-100 p-1 rounded">深い情報処理・統合</div>
-                            <p class="text-xs font-bold mt-2">学習・創造</p>
+                            <p class="text-xs">知の探索・統合</p>
+                            <div class="mt-2 text-xs bg-stone-100 p-1 rounded">学習・創造的解決</div>
                         </div>
-
                     </div>
 
-                    <!-- Output -->
-                    <div class="relative z-10">
+                    <!-- Step 3: Outcomes -->
+                    <div class="z-10">
                         <div id="output-box" class="bg-stone-200 text-stone-500 p-4 rounded-lg shadow transition-colors duration-500">
-                            <div id="output-icon" class="text-2xl mb-2">❓</div>
+                            <div id="output-icon" class="text-3xl mb-2">❓</div>
                             <h4 id="output-title" class="font-bold">結果は？</h4>
-                            <p id="output-desc" class="text-xs mt-1">信念スイッチを押してください</p>
+                            <p id="output-desc" class="text-xs mt-1">スイッチを選択してください</p>
                         </div>
                     </div>
-
-                    <!-- Connecting Lines (SVG simulation with absolute divs) -->
-                    <!-- Dynamic lines handled via JS class toggling on parent/child elements for simplicity in this demo structure -->
                 </div>
 
-                <div class="mt-8 text-center text-sm text-stone-500 bg-yellow-50 p-4 rounded border border-yellow-100">
-                    <span class="font-bold text-yellow-700">💡 ポイント:</span> 
-                    「多様性は価値がある」という信念（Pro-diversity Beliefs）が、脳内のスイッチを切り替え、分断（上）ではなく統合（下）のルートを選ばせます。
+                <div class="mt-8 bg-white p-4 rounded border border-stone-200 text-sm leading-relaxed">
+                    <p>
+                        <strong class="text-science-dark">解説：</strong> 
+                        Homanら (2007) の研究によれば、メンバーが「多様性は価値がある」という信念（ダイバーシティ・ビリーフ）を持っているときだけ、脳は「違い」を「学習の機会」と認識し、下のルート（情報の精緻化）が活性化します。逆に「似ている方が楽だ」と思っていると、上のルート（分断）に進み、多様性は害になります。
+                    </p>
+                </div>
+            </div>
+
+            <!-- Moderators: Context -->
+            <div class="grid md:grid-cols-2 gap-8 mt-12">
+                <div class="bg-stone-50 p-6 rounded-lg">
+                    <h4 class="font-bold text-stone-800 mb-2">心理的安全性 (Psychological Safety)</h4>
+                    <p class="text-sm text-stone-600">
+                        Bresman & Edmondson (2022) は、心理的安全性こそが多様性の効果を「解放 (Unlock)」する鍵だと示しました。安全性が低いチームでは、多様性が高まると逆にパフォーマンスが下がりました。リスクを取って発言できる土壌が必須です。
+                    </p>
+                </div>
+                <div class="bg-stone-50 p-6 rounded-lg">
+                    <h4 class="font-bold text-stone-800 mb-2">タスク相互依存性 (Task Interdependence)</h4>
+                    <p class="text-sm text-stone-600">
+                        Van der Vegt & Bunderson (2005) によると、お互いに協力しないと仕事が終わらない「頼り合い」の構造がない限り、多様な専門性は活かされません。一人で完結する仕事なら、多様性は不要（むしろ邪魔）なのです。
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- Section 4: Case Study (Belfre) -->
-    <section id="case-study" class="py-16 bg-stone-50">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row gap-12 items-start">
-                
-                <!-- Left: Context -->
-                <div class="md:w-1/2">
-                    <span class="text-science font-bold text-sm tracking-wider">CASE STUDY</span>
-                    <h2 class="text-2xl font-bold text-stone-800 mt-2 mb-6">ベルフレ研修事例：理論の実践</h2>
-                    <p class="text-stone-600 mb-4 leading-relaxed">
-                        実際にCEMモデルに基づいた介入を行った事例です。
-                        あえて「多様性のあるグループ」を作り、協力が不可欠な課題（マシュマロチャレンジ等）に取り組ませました。
-                    </p>
-                    <div class="space-y-4 mt-8">
-                        <div class="bg-white p-4 rounded-lg shadow-sm border-l-4 border-science">
-                            <h4 class="font-bold text-stone-800">実施内容</h4>
-                            <ul class="list-disc list-inside text-sm text-stone-600 mt-2 space-y-1">
-                                <li>検査結果に基づく意図的なグループ分け</li>
-                                <li>タスク相互依存性の高いワーク</li>
-                                <li>「意見の対立＝創造」というビリーフの共有</li>
-                            </ul>
-                        </div>
-                        <div class="bg-white p-4 rounded-lg shadow-sm">
-                            <h4 class="font-bold text-stone-800">参加者の声</h4>
-                            <p class="text-sm italic text-stone-600 mt-2">
-                                「性格が似ていると話し合いは早いが、違う人がいると意見がまとまらず難しかった。しかし、<span class="bg-yellow-100 font-bold px-1">深いコミュニケーションになった</span>」
-                            </p>
-                        </div>
+    <section id="case" class="py-20 bg-stone-50 border-t border-stone-200">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <div class="section-header border-science">
+                <h2 class="text-3xl font-bold text-stone-900">4. 実践事例：ベルフレ研修の成果</h2>
+            </div>
+            
+            <div class="mb-10 text-content">
+                <p>
+                    理論を現場でどう応用するのか。CEMモデルに基づき、ユースチーム（59名）とチアダンスチーム（26名）に対して実施した「ベルフレ研修」の事例を紹介します。
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-12 items-start">
+                <!-- Intervention Detail -->
+                <div class="space-y-6">
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                        <h3 class="font-bold text-stone-800 text-lg mb-4">🔬 研修の設計図</h3>
+                        <ol class="list-decimal list-inside space-y-4 text-sm text-stone-600">
+                            <li>
+                                <strong>意図的なグループ分け：</strong>
+                                <br>検査結果に基づき、あえて「性格も能力もバラバラな多様性グループ」を作成。
+                            </li>
+                            <li>
+                                <strong>協力必須の課題（相互依存性）：</strong>
+                                <br>マシュマロチャレンジ（パスタで塔を作る）やダンスの振付作成など、一人では不可能なタスクを実施。
+                            </li>
+                            <li>
+                                <strong>ビリーフの書き換え：</strong>
+                                <br>「多様性がない時の楽さ」と「ある時の難しさ・創造性」を比較体験させ、「意見の対立は創造のプロセスである」という信念を植え付ける。
+                            </li>
+                        </ol>
+                    </div>
+
+                    <div class="bg-white p-6 rounded-xl shadow-sm border border-stone-200">
+                        <h3 class="font-bold text-stone-800 text-lg mb-4">🗣️ 参加者の生の声</h3>
+                        <blockquote class="italic text-stone-600 text-sm border-l-4 border-stone-300 pl-4 py-2 bg-stone-50 rounded">
+                            「性格が似ている人同士だと、話し合いは早くて楽だが、アウトプットは普通だった。」
+                        </blockquote>
+                        <blockquote class="italic text-stone-600 text-sm border-l-4 border-science-light pl-4 py-2 bg-science-light/10 rounded mt-2">
+                            「色々な性格の人がいた時は、意見がまとまらず大変だった。でも、<strong class="text-science-dark">深いコミュニケーションになり、結果的に面白いものができた。</strong>」
+                        </blockquote>
+                        <p class="text-xs text-right mt-2 text-stone-400">——これはまさに「情報の精緻化」が起きた瞬間の言葉です。</p>
                     </div>
                 </div>
 
-                <!-- Right: Results Chart -->
-                <div class="md:w-1/2 w-full">
-                    <div class="bg-white p-6 rounded-xl shadow border border-stone-100">
-                        <h3 class="font-bold text-stone-700 mb-4 text-center">タスク結束 (GI-Tスコア) の変化</h3>
-                        <div class="chart-container h-64">
+                <!-- Results Data -->
+                <div>
+                    <div class="bg-white p-6 rounded-xl shadow-lg border border-stone-100">
+                        <h3 class="font-bold text-stone-800 text-lg mb-2 text-center">定量効果：タスク結束（GI-T）の変化</h3>
+                        <p class="text-xs text-stone-500 text-center mb-6">※GI-T: チームが目標に向かって一体となっている度合い</p>
+                        
+                        <div class="chart-container" style="height: 250px;">
                             <canvas id="belfreChart"></canvas>
                         </div>
-                        <div class="mt-4 text-center">
-                            <span class="text-3xl font-bold text-science">+1.5pt</span>
-                            <span class="text-stone-500 text-sm ml-2">有意に向上</span>
-                            <p class="text-xs text-stone-400 mt-2">役割の異なるメンバー間の心理的距離が縮まりました。</p>
+
+                        <div class="mt-6 flex justify-center items-center gap-4">
+                            <div class="text-center">
+                                <span class="block text-xs text-stone-500">実施前</span>
+                                <span class="text-2xl font-bold text-stone-400">15.5</span>
+                            </div>
+                            <div class="text-stone-300">➜</div>
+                            <div class="text-center">
+                                <span class="block text-xs text-stone-500">実施後</span>
+                                <span class="text-3xl font-bold text-science">17.0</span>
+                                <span class="text-xs font-bold text-science bg-science-light px-2 py-1 rounded-full ml-1">+1.5pt</span>
+                            </div>
                         </div>
+                        <p class="text-sm text-stone-600 mt-6 text-center">
+                            統計的に有意な向上が確認されました。<br>
+                            特に「役割の異なるメンバー間」の心理的距離が縮まり、組織の断層が修復されました。
+                        </p>
                     </div>
                 </div>
             </div>
@@ -366,220 +451,103 @@
     </section>
 
     <!-- Section 5: Action Plan -->
-    <section id="action" class="py-16 bg-stone-800 text-white">
-        <div class="container mx-auto px-4">
-            <div class="text-center mb-12">
-                <h2 class="text-2xl font-bold mb-4">明日からできる科学的チーム設計</h2>
-                <p class="text-stone-300">研究結果に基づいた4つのアクション</p>
+    <section id="action" class="py-20 bg-stone-800 text-stone-100">
+        <div class="container mx-auto px-4 max-w-6xl">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold mb-4">結論：明日からできる科学的チーム設計</h2>
+                <p class="text-stone-400">研究と実践から導き出された、4つの具体的アクション。</p>
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
                 <!-- Action 1 -->
-                <div class="interactive-card bg-stone-700 p-6 rounded-lg border-t-4 border-teal-500">
-                    <div class="text-2xl mb-3">🎯</div>
-                    <h3 class="font-bold text-lg mb-2">採用の基準を変える</h3>
-                    <p class="text-sm text-stone-300">
-                        スキルや背景は「多様」に。しかし、<strong>誠実性と協調性は「同質（全員高い）」</strong>に揃える。性格の不一致はリスクです。
+                <div class="bg-stone-700 p-6 rounded-lg border-t-4 border-teal-500 hover:bg-stone-600 transition duration-300">
+                    <div class="text-3xl mb-4">🎯</div>
+                    <h3 class="font-bold text-lg mb-3">1. 採用：性格は揃える</h3>
+                    <p class="text-sm text-stone-300 leading-relaxed">
+                        知識やスキルは「バラバラ（多様）」にしてください。しかし、<strong>誠実性と協調性は「全員が高いレベル」</strong>の人を選んでください。ここに多様性は不要です。性格の不一致は「不公平感」と「怠け」を生むだけです。
                     </p>
                 </div>
 
                 <!-- Action 2 -->
-                <div class="interactive-card bg-stone-700 p-6 rounded-lg border-t-4 border-yellow-500">
-                    <div class="text-2xl mb-3">🧠</div>
-                    <h3 class="font-bold text-lg mb-2">信念をセットする</h3>
-                    <p class="text-sm text-stone-300">
-                        リーダーが最初に「なぜ多様性が必要か」「対立は貢献である」と語り、チームの<strong>共通認識（ビリーフ）</strong>にします。
+                <div class="bg-stone-700 p-6 rounded-lg border-t-4 border-yellow-500 hover:bg-stone-600 transition duration-300">
+                    <div class="text-3xl mb-4">🧠</div>
+                    <h3 class="font-bold text-lg mb-3">2. 導入：信念を植え付ける</h3>
+                    <p class="text-sm text-stone-300 leading-relaxed">
+                        チーム発足時にリーダーが宣言してください。「このチームは意見がぶつかるように作ってある。<strong>対立は攻撃ではなく、貢献だ</strong>」と。この信念（ビリーフ）のセットアップなしに開始してはいけません。
                     </p>
                 </div>
 
                 <!-- Action 3 -->
-                <div class="interactive-card bg-stone-700 p-6 rounded-lg border-t-4 border-blue-500">
-                    <div class="text-2xl mb-3">🔗</div>
-                    <h3 class="font-bold text-lg mb-2">協力構造を作る</h3>
-                    <p class="text-sm text-stone-300">
-                        一人で完結させない。互いのリソースを交換しないと完了しない<strong>「タスク相互依存性」</strong>を業務に組み込みます。
+                <div class="bg-stone-700 p-6 rounded-lg border-t-4 border-blue-500 hover:bg-stone-600 transition duration-300">
+                    <div class="text-3xl mb-4">🔗</div>
+                    <h3 class="font-bold text-lg mb-3">3. 構造：協力の強制</h3>
+                    <p class="text-sm text-stone-300 leading-relaxed">
+                        「自分の仕事は自分で完結」させないでください。誰かの情報を借りないと完了しないフローを設計し、<strong>構造的に頼り合わせる（相互依存性）</strong>ことで、分断を防ぎます。
                     </p>
                 </div>
 
                 <!-- Action 4 -->
-                <div class="interactive-card bg-stone-700 p-6 rounded-lg border-t-4 border-pink-500">
-                    <div class="text-2xl mb-3">🛡️</div>
-                    <h3 class="font-bold text-lg mb-2">心理的安全性</h3>
-                    <p class="text-sm text-stone-300">
-                        無知やミスをさらけ出しても安全な土壌を作る。これがないと、多様性はただの<strong>「沈黙」か「喧嘩」</strong>に終わります。
+                <div class="bg-stone-700 p-6 rounded-lg border-t-4 border-pink-500 hover:bg-stone-600 transition duration-300">
+                    <div class="text-3xl mb-4">🛡️</div>
+                    <h3 class="font-bold text-lg mb-3">4. 土壌：心理的安全性</h3>
+                    <p class="text-sm text-stone-300 leading-relaxed">
+                        「無知だと思われないか」「邪魔だと思われないか」という不安を取り除いてください。安全な土壌があって初めて、多様性という種は「情報の精緻化」という芽を出します。
                     </p>
                 </div>
-
             </div>
         </div>
     </section>
 
-    <!-- Footer: References -->
-    <footer class="bg-stone-900 text-stone-500 py-12 text-xs">
-        <div class="container mx-auto px-4">
-            <h4 class="font-bold text-stone-400 mb-4 uppercase tracking-wider">主な引用文献 (References)</h4>
-            <div class="grid md:grid-cols-2 gap-x-8 gap-y-2">
-                <p><strong>Bell, S. T. (2007).</strong> Deep-level composition variables as predictors of team performance: A meta-analysis. <em>Journal of Applied Psychology</em>.</p>
-                <p><strong>De Dreu, C. K. W., & Weingart, L. R. (2003).</strong> Task versus relationship conflict...: A meta-analysis. <em>Journal of Applied Psychology</em>.</p>
-                <p><strong>Homan, A. C., et al. (2007).</strong> Bridging faultlines by valuing diversity... <em>Journal of Applied Psychology</em>.</p>
-                <p><strong>Peeters, M. A. G., et al. (2006).</strong> Personality and team performance: A meta-analysis. <em>European Journal of Personality</em>.</p>
-                <p><strong>Van Knippenberg, D., et al. (2004).</strong> Work group diversity and group performance: An integrative model (CEM). <em>Journal of Applied Psychology</em>.</p>
-                <p><strong>Webber, S. S., & Donahue, L. M. (2001).</strong> Impact of organizational diversity on work group processes... <em>Journal of Business and Psychology</em>.</p>
-                <p><strong>Bresman, H., & Edmondson, A. C. (2022).</strong> To excel with a diverse team, you need psychological safety. <em>HBR</em>.</p>
+    <!-- References -->
+    <footer class="bg-stone-900 text-stone-500 py-16 text-xs leading-normal">
+        <div class="container mx-auto px-4 max-w-5xl">
+            <h4 class="font-bold text-stone-400 mb-6 uppercase tracking-wider text-sm">主要引用文献 (References)</h4>
+            <div class="grid md:grid-cols-2 gap-x-12 gap-y-4">
+                <p>[1] Webber, S. S., & Donahue, L. M. (2001). Impact of organizational diversity on work group processes and performance: A meta-analysis. <em>Journal of Business and Psychology</em>.</p>
+                <p>[2] Bell, S. T. (2007). Deep-level composition variables as predictors of team performance: A meta-analysis. <em>Journal of Applied Psychology</em>.</p>
+                <p>[3] Harrison, D. A., & Klein, K. J. (2007). What's the difference? Diversity constructs as separation, variety, or disparity. <em>Academy of Management Review</em>.</p>
+                <p>[4] De Dreu, C. K. W., & Weingart, L. R. (2003). Task versus relationship conflict, team performance, and team member satisfaction: A meta-analysis. <em>Journal of Applied Psychology</em>.</p>
+                <p>[5] Lau, D. C., & Murnighan, J. K. (1998). Demographic diversity and faultlines: The compositional dynamics of organizational groups. <em>Academy of Management Review</em>.</p>
+                <p>[6] Van Knippenberg, D., De Dreu, C. K. W., & Homan, A. C. (2004). Work group diversity and group performance: An integrative model and research agenda. <em>Journal of Applied Psychology</em>.</p>
+                <p>[7] Homan, A. C., et al. (2007). Bridging faultlines by valuing diversity: Diversity beliefs, information elaboration, and performance. <em>Journal of Applied Psychology</em>.</p>
+                <p>[8] Peeters, M. A. G., et al. (2006). Personality and team performance: A meta-analysis. <em>European Journal of Personality</em>.</p>
+                <p>[9] Bresman, H., & Edmondson, A. C. (2022). To excel with a diverse team, you need psychological safety. <em>Harvard Business Review</em>.</p>
+                <p>[10] Van der Vegt, G. S., & Bunderson, J. S. (2005). Learning and performance in multidisciplinary teams: The importance of collective team identification. <em>Academy of Management Journal</em>.</p>
             </div>
-            <div class="mt-8 pt-8 border-t border-stone-800 text-center">
-                <p>&copy; 2026 Team Science Report based on Belfre Training Data & Academic Literature.</p>
+            <div class="mt-12 pt-8 border-t border-stone-800 text-center">
+                <p>&copy; 2026 Team Diversity Science Report. Based on Belfre Training Data & Academic Literature.</p>
             </div>
         </div>
     </footer>
 
-    <!-- Scripts -->
+    <!-- Scripts for Logic & Charts -->
     <script>
-        // --- 1. Charts Configuration ---
-        document.addEventListener('DOMContentLoaded', function() {
-            
-            // Chart 1: Myth vs Reality (Conceptual)
-            const ctxMyth = document.getElementById('mythChart').getContext('2d');
-            new Chart(ctxMyth, {
-                type: 'bar',
-                data: {
-                    labels: ['一般的な期待', '実際の効果 (統計)'],
-                    datasets: [{
-                        label: 'パフォーマンスへの影響',
-                        data: [8, 0.5], // Conceptual: High expectation vs near zero actual
-                        backgroundColor: ['#e7e5e4', '#be123c'], // stone-200 vs rose-700
-                        borderRadius: 4
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return context.dataIndex === 1 ? '統計的にほぼゼロ (Webber & Donahue 2001)' : '非常に高いと期待されている';
-                                }
-                            }
-                        }
-                    },
-                    scales: {
-                        y: { 
-                            beginAtZero: true, 
-                            max: 10,
-                            title: { display: true, text: '影響の大きさ (概念値)' }
-                        }
-                    }
+        // --- 1. Interaction Logic for Personality Section ---
+        function updatePersonalityExplain(type, choice) {
+            const explainDiv = document.getElementById(`explain-${type}`);
+            explainDiv.classList.remove('hidden');
+            explainDiv.classList.add('block', 'fade-in');
+
+            if (type === 'conscientious') {
+                if (choice === 'high') {
+                    explainDiv.innerHTML = "<strong class='text-science'>✅ 正解です (Bell, 2007)。</strong><br>誠実性の平均値が高いことはパフォーマンスと正の相関があります。全員が勤勉であれば、信頼関係が築きやすく、社会的怠惰（手抜き）も起きにくくなります。";
+                    explainDiv.className = "mt-4 text-sm bg-science-light/30 border border-science text-stone-700 p-4 rounded";
+                } else {
+                    explainDiv.innerHTML = "<strong class='text-alert'>❌ 危険です (Peeters et al., 2006)。</strong><br>誠実性の分散（バラつき）が大きいと、パフォーマンスは低下します。真面目なメンバーが「あいつがやらないなら自分もやらない」とやる気を失う（サッカー効果）ためです。";
+                    explainDiv.className = "mt-4 text-sm bg-alert-light/30 border border-alert text-stone-700 p-4 rounded";
                 }
-            });
-
-            // Chart 2: Task Conflict (Negative Correlation)
-            const ctxConflict = document.getElementById('conflictChart').getContext('2d');
-            new Chart(ctxConflict, {
-                type: 'line',
-                data: {
-                    labels: ['低', '中', '高'], // Level of Task Conflict
-                    datasets: [{
-                        label: 'チームパフォーマンス',
-                        data: [8, 5, 2], // Negative slope
-                        borderColor: '#be123c', // rose-700
-                        backgroundColor: 'rgba(190, 18, 60, 0.1)',
-                        tension: 0.3,
-                        fill: true
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false },
-                        title: { display: true, text: 'タスク葛藤とパフォーマンスの関係 (De Dreu & Weingart)' }
-                    },
-                    scales: {
-                        y: { display: false },
-                        x: { title: { display: true, text: 'タスク葛藤のレベル' } }
-                    }
+            } else if (type === 'agreeable') {
+                if (choice === 'high') {
+                    explainDiv.innerHTML = "<strong class='text-science'>✅ 正解です。</strong><br>協調性は「チームの潤滑油」です。全員が高い水準にあることで、心理的安全性が保たれ、意見交換がスムーズになります。";
+                    explainDiv.className = "mt-4 text-sm bg-science-light/30 border border-science text-stone-700 p-4 rounded";
+                } else {
+                    explainDiv.innerHTML = "<strong class='text-alert'>❌ 危険です (Team Minimum Agreeableness)。</strong><br>研究によると、平均値よりも「一番低い人のスコア」がチーム全体の足を引っ張ります。たった一人でも攻撃的・非協力的な人がいると、チーム全体が萎縮してしまいます（腐ったリンゴ効果）。";
+                    explainDiv.className = "mt-4 text-sm bg-alert-light/30 border border-alert text-stone-700 p-4 rounded";
                 }
-            });
-
-            // Chart 3: Belfre Case Study (GI-T Score)
-            const ctxBelfre = document.getElementById('belfreChart').getContext('2d');
-            new Chart(ctxBelfre, {
-                type: 'bar',
-                data: {
-                    labels: ['実施前', '実施後'],
-                    datasets: [{
-                        label: 'タスク結束 (GI-Tスコア)',
-                        data: [15.5, 17.0],
-                        backgroundColor: ['#d6d3d1', '#0f766e'], // stone-300 vs teal-700
-                        borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: { display: false }
-                    },
-                    scales: {
-                        y: { 
-                            min: 10, 
-                            max: 20,
-                            title: { display: true, text: 'GI-T スコア' }
-                        }
-                    }
-                }
-            });
-        });
-
-        // --- 2. Personality Simulator Logic ---
-        const personalityState = {
-            conscientious: null,
-            agreeable: null
-        };
-
-        function setPersonality(type, value) {
-            personalityState[type] = value;
-            
-            // Update Button Styles
-            document.querySelectorAll(`.p-btn-${type === 'conscientious' ? 'c' : 'a'}`).forEach(btn => {
-                btn.classList.remove('bg-stone-800', 'text-white');
-                btn.classList.add('bg-white', 'text-stone-800');
-            });
-            const selectedBtnId = `btn-${type === 'conscientious' ? 'c' : 'a'}-${value}`;
-            const activeBtn = document.getElementById(selectedBtnId);
-            activeBtn.classList.remove('bg-white', 'text-stone-800');
-            activeBtn.classList.add('bg-stone-800', 'text-white');
-
-            // Evaluate Result
-            updateSimulationResult();
-        }
-
-        function updateSimulationResult() {
-            const resultBox = document.getElementById('simulation-result');
-            const c = personalityState.conscientious;
-            const a = personalityState.agreeable;
-
-            if (!c || !a) return;
-
-            if (c === 'mixed') {
-                // High Variance in Conscientiousness = Bad
-                resultBox.className = "p-4 bg-alert-light text-alert-dark rounded text-sm font-bold border border-alert";
-                resultBox.innerHTML = "⚠️ 危険：誠実性の不一致<br><span class='font-normal'>真面目な人が「不公平だ」と感じてやる気を失います（社会的怠惰）。パフォーマンス低下のリスクが高いです。</span>";
-            } else if (a === 'mixed') {
-                // Low Minimum Agreeableness = Bad Apple
-                resultBox.className = "p-4 bg-alert-light text-alert-dark rounded text-sm font-bold border border-alert";
-                resultBox.innerHTML = "⚠️ 危険：腐ったリンゴ効果<br><span class='font-normal'>たった一人でも非協力的な人がいると、チーム全体の心理的安全性が破壊されます。</span>";
-            } else {
-                // All High = Good
-                resultBox.className = "p-4 bg-science-light text-science-dark rounded text-sm font-bold border border-science";
-                resultBox.innerHTML = "✅ 最適な構成<br><span class='font-normal'>全員が高い誠実性と協調性を持っています。この土台があれば、スキルの多様性が活きてきます。</span>";
             }
         }
 
-        // --- 3. CEM Model Interaction ---
+        // --- 2. Interaction Logic for CEM Model ---
         function toggleBelief(isGood) {
             const pathCat = document.getElementById('path-cat');
             const pathElab = document.getElementById('path-elab');
@@ -590,48 +558,146 @@
             const btnGood = document.getElementById('btn-belief-good');
             const btnBad = document.getElementById('btn-belief-bad');
 
-            // Reset Styles
+            // Reset
             pathCat.classList.remove('active', 'border-solid', 'opacity-100', 'scale-105');
-            pathCat.classList.add('opacity-30', 'scale-95');
+            pathCat.classList.add('opacity-30');
             pathElab.classList.remove('active', 'border-solid', 'opacity-100', 'scale-105');
-            pathElab.classList.add('opacity-30', 'scale-95');
+            pathElab.classList.add('opacity-30');
 
             if (isGood) {
-                // Good Beliefs -> Elaboration
-                btnGood.className = "px-4 py-2 rounded-full text-sm font-bold transition bg-science text-white shadow-lg";
-                btnBad.className = "px-4 py-2 rounded-full text-sm font-bold transition text-stone-400 hover:text-stone-600";
+                // Success Path
+                btnGood.className = "px-5 py-2 rounded-full text-sm font-bold transition bg-science text-white shadow-lg";
+                btnBad.className = "px-5 py-2 rounded-full text-sm font-bold transition text-stone-400 hover:text-stone-600";
                 
-                pathElab.classList.remove('opacity-30', 'scale-95');
+                pathElab.classList.remove('opacity-30');
                 pathElab.classList.add('active', 'border-solid', 'opacity-100', 'scale-105');
 
-                outputBox.className = "bg-science text-white p-4 rounded-lg shadow-lg transition-colors duration-500";
+                outputBox.className = "bg-science text-white p-4 rounded-lg shadow-lg transition-colors duration-500 transform translate-y-2";
                 outputIcon.innerText = "🚀";
-                outputTitle.innerText = "高パフォーマンス";
-                outputDesc.innerText = "知識が統合され、イノベーションが生まれる";
+                outputTitle.innerText = "イノベーション";
+                outputDesc.innerText = "多様な情報が統合され、意思決定の質が向上する（Homan et al., 2007）。";
             } else {
-                // Bad Beliefs -> Categorization
-                btnBad.className = "px-4 py-2 rounded-full text-sm font-bold transition bg-alert text-white shadow-lg";
-                btnGood.className = "px-4 py-2 rounded-full text-sm font-bold transition text-stone-400 hover:text-stone-600";
+                // Failure Path
+                btnBad.className = "px-5 py-2 rounded-full text-sm font-bold transition bg-alert text-white shadow-lg";
+                btnGood.className = "px-5 py-2 rounded-full text-sm font-bold transition text-stone-400 hover:text-stone-600";
 
-                pathCat.classList.remove('opacity-30', 'scale-95');
+                pathCat.classList.remove('opacity-30');
                 pathCat.classList.add('active', 'border-solid', 'opacity-100', 'scale-105');
 
-                outputBox.className = "bg-alert text-white p-4 rounded-lg shadow-lg transition-colors duration-500";
+                outputBox.className = "bg-alert text-white p-4 rounded-lg shadow-lg transition-colors duration-500 transform translate-y-2";
                 outputIcon.innerText = "📉";
-                outputTitle.innerText = "低パフォーマンス";
-                outputDesc.innerText = "内集団バイアスによる対立と情報の分断";
+                outputTitle.innerText = "チーム崩壊";
+                outputDesc.innerText = "内集団バイアスが発生し、情報は隠蔽され、対立が激化する。";
             }
         }
 
-        // --- 4. Mobile Menu Toggle ---
-        document.getElementById('mobile-menu-btn').addEventListener('click', function() {
-            document.getElementById('mobile-menu').classList.toggle('hidden');
-        });
+        // --- 3. Charts Setup ---
+        document.addEventListener('DOMContentLoaded', function() {
+            
+            // 1. Meta-Analysis Reality Chart
+            const ctxMeta = document.getElementById('metaChart').getContext('2d');
+            new Chart(ctxMeta, {
+                type: 'line',
+                data: {
+                    labels: ['低 (同質的)', '中', '高 (多様)'],
+                    datasets: [
+                        {
+                            label: '一般的な期待（神話）',
+                            data: [3, 6, 9],
+                            borderColor: '#d6d3d1', // stone-300
+                            borderDash: [5, 5],
+                            tension: 0.4
+                        },
+                        {
+                            label: '実際のデータ (メタ分析)',
+                            data: [5, 5.2, 4.8], // Flat or slightly negative
+                            borderColor: '#be123c', // rose-700
+                            backgroundColor: 'rgba(190, 18, 60, 0.1)',
+                            borderWidth: 3,
+                            tension: 0.4,
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { position: 'bottom' },
+                        tooltip: {
+                            callbacks: {
+                                label: function(c) { 
+                                    return c.datasetIndex === 1 ? '統計的有意差なし (Null Effect)' : '右肩上がりを期待するが...'; 
+                                }
+                            }
+                        }
+                    },
+                    scales: {
+                        y: { display: false, min: 0, max: 10 },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
 
-        // Initialize default view for simulator
-        setPersonality('conscientious', 'high');
-        setPersonality('agreeable', 'mixed'); // Start with a warning state to prompt interaction
-        
+            // 2. Conflict Chart (De Dreu & Weingart)
+            const ctxConflict = document.getElementById('conflictChart').getContext('2d');
+            new Chart(ctxConflict, {
+                type: 'bar',
+                data: {
+                    labels: ['関係葛藤 (感情)', 'タスク葛藤 (仕事)'],
+                    datasets: [{
+                        label: 'パフォーマンスとの相関 (負の影響)',
+                        data: [-0.22, -0.23], // Based on De Dreu & Weingart meta-analysis approx values
+                        backgroundColor: '#be123c',
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        title: { display: true, text: 'どちらの葛藤もパフォーマンスを下げる (相関係数)' }
+                    },
+                    scales: {
+                        x: { min: -0.4, max: 0, title: { display: true, text: '相関係数 (左に行くほど悪影響)' } }
+                    }
+                }
+            });
+
+            // 3. Belfre Result Chart
+            const ctxBelfre = document.getElementById('belfreChart').getContext('2d');
+            new Chart(ctxBelfre, {
+                type: 'bar',
+                data: {
+                    labels: ['実施前', '実施後'],
+                    datasets: [{
+                        label: 'タスク結束 (GI-Tスコア)',
+                        data: [15.5, 17.0],
+                        backgroundColor: ['#e7e5e4', '#0f766e'], // stone-200 -> teal-700
+                        borderRadius: 8,
+                        barThickness: 50
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { enabled: true }
+                    },
+                    scales: {
+                        y: { 
+                            min: 14, 
+                            max: 18,
+                            grid: { color: '#f5f5f4' }
+                        },
+                        x: { grid: { display: false } }
+                    }
+                }
+            });
+        });
     </script>
 </body>
 </html>
